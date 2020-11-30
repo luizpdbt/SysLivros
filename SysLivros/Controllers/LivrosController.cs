@@ -18,7 +18,7 @@ namespace SysLivros.Controllers
 
             return Ok(new 
             {
-                livros="Cronnicas de Narnia,Fantastico Mundo de Bob,Mulher gato"
+                livros="Cronnicas de Narnia,Fantastico Mundo de Bob,Mulher gato, el mariate"
             });
         }
 
