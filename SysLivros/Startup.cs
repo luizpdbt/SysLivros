@@ -35,7 +35,9 @@ namespace SysLivros
                                       builder.WithOrigins("http://example.com",
                                                           "http://www.contoso.com")
                                                           .AllowAnyHeader()
+                                                          .AllowAnyOrigin()
                                                           .AllowAnyMethod();
+                                      
                                   });
             });
 
