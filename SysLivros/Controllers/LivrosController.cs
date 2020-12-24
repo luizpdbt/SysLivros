@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualBasic;
 using SysLivros.Model;
 
@@ -23,7 +24,7 @@ namespace SysLivros.Controllers
         [Route("api/Livros")]
         public async Task<IActionResult> RetornaLivrosAsync()
         {
-
+            var p = new { };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             var response = await client.GetAsync("https://feed2json.org/convert?url=https://www.atcsimulation.com/blog-feed.xml");
             var retorno = await response.Content.ReadAsStringAsync();
