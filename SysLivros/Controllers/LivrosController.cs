@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.Serialization.Formatters;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -14,18 +16,19 @@ namespace SysLivros.Controllers
     [ApiController]
     public class LivrosController : ControllerBase
     {
+        static HttpClient client = new HttpClient();
+
 
         [HttpGet]
         [Route("api/Livros")]
-        public IActionResult RetornaLivros()
+        public async Task<IActionResult> RetornaLivrosAsync()
         {
 
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await client.GetAsync("https://feed2json.org/convert?url=https://www.atcsimulation.com/blog-feed.xml");
+            var retorno = await response.Content.ReadAsStringAsync();
 
-
-            return Ok(new 
-            {
-                livros="Cronnicas de Narnia,Fantastico Mundo de Bob,Mulher gato, el mariate"
-            });
+            return Ok(retorno);
         }
 
 
