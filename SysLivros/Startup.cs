@@ -15,6 +15,8 @@ namespace SysLivros
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,12 +27,25 @@ namespace SysLivros
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://example.com",
+                                                          "http://www.contoso.com")
+                                                          .AllowAnyHeader()
+                                                          .AllowAnyMethod();
+                                  });
+            });
+
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -41,6 +56,8 @@ namespace SysLivros
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseEndpoints(endpoints =>
             {
